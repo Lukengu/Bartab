@@ -1,0 +1,116 @@
+{% extends "layout.twig"  %}
+
+{% block content %}
+    {% if messages %}
+
+        {% for type,message in messages %}
+        <div class="alert alert-{{type}} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+    {% endif %}
+
+
+
+<div class="container">
+    <div class="row">
+        <h2> Closing Tab {%  if order %}  Order #{{order.id}}  Total : {{ currency }}{{ order_total}} {% endif  %} </h2>
+    </div>
+    <form method="POST" name="tabList" action="/tab-close">
+
+
+    <div class="row">
+
+            <div class="col-8">
+                <input type="text"  class="form-control" placeholder="Type the order number"
+                value="{{ order.id }}" {% if order %} disabled {% endif %}
+                       name="order_id"
+                />
+
+            </div>
+            <div class="col-4">
+                <button class="btn btn-primary btn-block">SEARCH</button>
+            </div>
+
+    </div>
+    </form>
+     {% if order %}
+    <form method="POST" name="tabList" action="/tab-close">
+        <input type="hidden" name="close" value="1" />
+        <input type="hidden" name="order_id" value="{{ order.id }}" />
+          <div class="row">
+
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Beer</th>
+                            <th scope="col">Price</th>
+                            <th scope="col"> Qty</th>
+                            <th scope="col"> Total </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in  items %}
+                            <tr class="tabData">
+
+                                <td>{{ item.beer_id.name }}</td>
+                                <td> {{ item.beer_id.price }}</td>
+                                <td> <input  type="text" step="1" min="1" class="form-control" readonly value="{{ item.qty }}"/> </td>
+                                <td> <input  type="text" class="form-control line_total" readonly value=" {{ item.qty *  item.beer_id.price }}"/> </td>
+
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <th> Total </th>
+                            <td></td>
+                            <td>  </td>
+                            <td> <input type="text" class="form-control" readonly value=" {{ order_total }}" /> </td>
+                        </tr>
+                        {% if order.number_split > 1 %}
+                            <tr>
+                            <td colspan="3"> split per person for {{order.number_split}}   </td>
+                            </tr>
+                            {% for i in range(1, order.number_split) %}
+                        <tr>
+                            <td>  </td>
+                            <td></td>
+                            <td>  </td>
+                            <td> <input  type="text" class="form-control"  readonly
+                                        value="{{ split_amount }}"/> </td>
+                        </tr>
+                            {% endfor %}
+                        {% endif %}
+                        <tr>
+                            <th>  </th>
+                            <td></td>
+                            <td>  </td>
+                            <td> <button class="btn btn-danger btn-block"> CLOSE TAB </button> </td>
+                        </tr>
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+    </form>
+    {% endif %}
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "layout.twig"  %}
+
+{% block content %}
+    {% if messages %}
+
+        {% for type,message in messages %}
+        <div class="alert alert-{{type}} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+    {% endif %}
+
+    <h2> Beers List</h2>
+    <form method="POST" name="tabList" action="/tab">
+    <table class="table beer_table">
+    <thead>
+    <tr>
+        <th scope="col">Beer</th>
+        <th scope="col">Price</th>
+        <th scope="col"> Qty</th>
+        <th scope="col"> Total </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for beer in beers %}
+    <tr class="tabData">
+
+        <td>{{ beer.name }}</td>
+        <td>{{ beer.currency }} {{ beer.price }}</td>
+        <td> <input name="beer_id[{{ beer.id }}]" data-id="{{ beer.id }}"  data-price="{{ beer.price }}" type="number" step="1" min="1" class="form-control beer_qty"/> </td>
+        <td> <input  type="text" class="form-control line_total" readonly /> </td>
+
+    </tr>
+    {% endfor %}
+    <tr>
+        <th> Total </th>
+        <td></td>
+        <td>  </td>
+        <td> <input type="text" class="form-control order_total" readonly  /> </td>
+    </tr>
+    <tr>
+        <td> if you would like to split the bill please input number of person </td>
+        <td></td>
+        <td>  </td>
+        <td> <input name="split_number" type="number" step="1" min="1" class="form-control"  /> </td>
+    </tr>
+
+    <tr>
+        <td>  </td>
+        <td></td>
+        <td>  </td>
+        <td> <button type="submit" class="btn btn-success btn-block"> SUBMIT </button> </td>
+    </tr>
+
+    </tbody>
+    </table>
+    </form>
+
+
+
+
+
+
+
+
+
+{% endblock %}
