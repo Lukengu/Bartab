@@ -7,5 +7,21 @@
 
     <div class="line"></div>
 
+    {% if  not beers %}
+        <div>
+            <p> There is no default data please press the button below to populate the data</p>
+            <form name="/" method="post">
+                    <button type="submit" class="btn btn-success"> POPULATE DATA </button>
+            </form>
+        </div>
+        {% else %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                The default data have been populate you may process.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+
 
 {% endblock %}

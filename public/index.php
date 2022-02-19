@@ -4,7 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Flash\Messages;
-use \BarTab\Middleware\SessionMiddleware;
+
 
 $containerBuilder = new ContainerBuilder();
 // Add container definition for the flash component
@@ -19,7 +19,7 @@ $containerBuilder->addDefinitions(
 
 
 
-$containerBuilder->enableCompilation(__DIR__ . '../cache');
+$containerBuilder->enableCompilation(__DIR__ . '/../cache');
 
 // Build PHP-DI Container instance
 
