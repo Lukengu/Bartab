@@ -108,6 +108,12 @@ class TabController
             {
                 $order = new Order();
                 $order = $order->find($order_id);
+
+                if(!$order->id)
+                {
+                    throw new AlreadyClosedException("Order  not found");
+                }
+
                 if($order->status == Tab::ORDER_STATUS_CLOSED)
                 {
                     throw new AlreadyClosedException("Order  #{$order->id} already closed");
@@ -168,6 +174,10 @@ class TabController
             try {
                 $order = new Order();
                 $order = $order->find($order_id);
+                if(!$order->id)
+                {
+                    throw new AlreadyClosedException("Order  not found");
+                }
                 if($order->status == Tab::ORDER_STATUS_CLOSED)
                 {
                     throw new AlreadyClosedException("Order  #{$order->id} already closed");
